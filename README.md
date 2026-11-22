@@ -2,7 +2,7 @@
 
 A full-stack, white-label platform that turns a person's body, goal, diet and allergies into **calorie/macro targets → ML recommendations → an optimised weekly meal plan → a shopping cart → checkout → daily tracking → an AI coach**. Includes customer and admin portals.
 
-## 2. Run it — step by step
+## 2. Run it : Step by Step
 
 ### Step 1 — Backend (terminal 1)
 
