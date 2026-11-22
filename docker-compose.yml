@@ -1,0 +1,17 @@
+# Optional: full stack with PostgreSQL.  Run:  docker compose up --build
+services:
+  db:
+    image: postgres:16-alpine
+    environment: { POSTGRES_USER: nutri, POSTGRES_PASSWORD: nutri, POSTGRES_DB: nutriagent }
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck: { test: ["CMD-SHELL", "pg_isready -U nutri"], interval: 5s, retries: 10 }
+  app:
+    build: .
+    depends_on: { db: { condition: service_healthy } }
+    environment:
+      DATABASE_URL: postgresql+psycopg2://nutri:nutri@db:5432/nutriagent
+      SECRET_KEY: change-me-in-production
+      GEMINI_API_KEY: ""
+    ports: ["8000:8000"]
+volumes:
+  pgdata:

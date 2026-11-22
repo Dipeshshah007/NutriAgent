@@ -1,0 +1,33 @@
+erDiagram
+  USER ||--o| PROFILE : has
+  USER ||--o{ CART_ITEM : owns
+  USER ||--o{ ORDER : places
+  USER ||--o{ FOOD_LOG : records
+  USER ||--o{ WEIGHT_LOG : records
+  USER ||--o{ MEAL_PLAN : generates
+  PRODUCT ||--o{ CART_ITEM : in
+  PRODUCT ||--o{ ORDER_ITEM : sold_as
+  PRODUCT ||--o{ FOOD_LOG : logged_as
+  ORDER ||--|{ ORDER_ITEM : contains
+  USER { int id PK
+    string email UK
+    string role "user | admin" }
+  PROFILE { int age
+    string sex
+    float height_cm
+    float weight_kg
+    string goal
+    string diet
+    json allergies }
+  PRODUCT { int id PK
+    string name
+    string kind
+    float price
+    int stock
+    float calories
+    float protein
+    json tags
+    json allergens }
+  ORDER { int id PK
+    string status
+    float total }

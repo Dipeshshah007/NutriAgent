@@ -1,0 +1,50 @@
+flowchart TB
+  subgraph Clients["Clients"]
+    U["Customer browser<br/>(React SPA)"]
+    A["Admin browser<br/>(React SPA)"]
+  end
+
+  subgraph Edge["Edge / Delivery"]
+    CDN["Static hosting / CDN<br/>(Vercel · Netlify · Cloudflare Pages)"]
+    LB["Reverse proxy / Load balancer<br/>(Nginx · Render · Fly.io)"]
+  end
+
+  subgraph API["FastAPI application (stateless, horizontally scalable)"]
+    direction TB
+    AUTH["Auth & RBAC<br/>JWT · bcrypt"]
+    SHOP["Catalog · Cart · Checkout<br/>Orders · Admin"]
+    TRK["Profile · Diet tracker"]
+    subgraph ML["ML / AI engine"]
+      NUT["Nutrition math<br/>BMR · TDEE · macros"]
+      REC["Content-based recommender<br/>Macro + tag feature vectors<br/>cosine similarity"]
+      PLAN["Meal-plan optimizer<br/>constrained search"]
+      COACH["AI Coach<br/>Gemini free tier / offline fallback"]
+    end
+  end
+
+  subgraph Data["Data layer"]
+    DB[("SQLite (dev)<br/>PostgreSQL (prod)")]
+    CACHE[("Redis cache<br/>(future)")]
+  end
+
+  EXT["Google Gemini API<br/>(optional, free tier)"]
+  PAY["Payment gateway<br/>Stripe / Razorpay<br/>(future)"]
+
+  U --> CDN
+  A --> CDN
+  CDN -->|"/api/*"| LB
+  LB --> AUTH
+  LB --> SHOP
+  LB --> TRK
+  SHOP --> REC
+  TRK --> NUT
+  SHOP --> PLAN
+  PLAN --> REC
+  REC --> NUT
+  TRK --> COACH
+  COACH -.->|"grounded prompt"| EXT
+  AUTH --> DB
+  SHOP --> DB
+  TRK --> DB
+  SHOP -.-> CACHE
+  SHOP -.->|"checkout"| PAY
