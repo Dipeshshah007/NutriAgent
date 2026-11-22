@@ -4,18 +4,17 @@ A full-stack, white-label platform that turns a person's body, goal, diet and al
 
 ## 2. Run it : Step by Step
 
-### Step 1 — Backend (terminal 1)
+### Step 1 — Backend
 
-**Windows (PowerShell):**
 ```powershell
 cd backend
 python -m venv .venv
-.venv\Scripts\Activate.ps1        # if blocked:  Set-ExecutionPolicy -Scope Process Bypass
+.venv\Scripts\Activate.ps1   
 pip install -r requirements.txt
 copy .env.example .env
 ```
 
-### Step 2 — Frontend (terminal 2)
+### Step 2 — Frontend
 
 ```bash
 cd frontend
